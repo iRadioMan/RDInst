@@ -1,96 +1,165 @@
-06.02.2016 16:46:08 Program started
-06.02.2016 16:46:08 Checking base
-06.02.2016 16:46:08 Base error #0
-06.02.2016 16:46:14 Program exit with exitcode 5
-06.02.2016 16:46:36 Program started
-06.02.2016 16:46:36 Checking base
-06.02.2016 16:46:36 Base error #1
-06.02.2016 16:46:38 Program exit with exitcode 7
-06.02.2016 16:46:47 Program started
-06.02.2016 16:46:47 Checking base
-06.02.2016 16:46:47 Get devices list
-06.02.2016 16:46:47 All devices installed
-06.02.2016 16:46:48 Program exit with exitcode 0
-06.02.2016 16:56:23 Program started
-06.02.2016 16:56:23 Checking base
-06.02.2016 16:56:23 Get devices list
-06.02.2016 16:56:23 All devices installed
-06.02.2016 16:56:25 Program exit with exitcode 0
-06.02.2016 16:57:11 Program started
-06.02.2016 16:57:11 Checking base
-06.02.2016 16:57:11 Get devices list
-06.02.2016 16:57:11 All devices installed
-06.02.2016 16:57:12 Program exit with exitcode 0
-06.02.2016 17:14:27 Program started
-06.02.2016 17:14:27 Checking base
-06.02.2016 17:14:27 Get OS version
-06.02.2016 17:14:27 Unsupported OS
-06.02.2016 17:14:32 Program exit with exitcode 9
-06.02.2016 17:14:57 Program started
-06.02.2016 17:14:57 Checking base
-06.02.2016 17:14:57 Get OS version
-06.02.2016 17:14:57 Unsupported OS
-06.02.2016 17:15:53 Program started
-06.02.2016 17:15:53 Checking base
-06.02.2016 17:15:53 Get OS version
-06.02.2016 17:15:53 Get devices list
-06.02.2016 17:15:54 All devices installed
-06.02.2016 17:15:56 Program exit with exitcode 0
-06.02.2016 17:18:53 Program started
-06.02.2016 17:18:53 Checking base
-06.02.2016 17:18:53 Get OS version
-06.02.2016 17:18:53 Get devices list
-06.02.2016 17:18:54 All devices installed
-06.02.2016 17:19:07 Program exit with exitcode 0
-06.02.2016 17:19:22 Program started
-06.02.2016 17:19:22 Checking base
-06.02.2016 17:19:22 Get OS version
-06.02.2016 17:19:22 Get devices list
-06.02.2016 17:19:22 All devices installed
-06.02.2016 17:19:40 Program exit with exitcode 0
-06.02.2016 17:20:14 Program started
-06.02.2016 17:20:14 Checking base
-06.02.2016 17:20:14 Get OS version
-06.02.2016 17:20:14 Get devices list
-06.02.2016 17:20:14 All devices installed
-06.02.2016 17:20:24 Program started
-06.02.2016 17:20:24 Checking base
-06.02.2016 17:20:24 Get OS version
-06.02.2016 17:20:24 Get devices list
-06.02.2016 17:20:25 All devices installed
-06.02.2016 17:20:35 Program started
-06.02.2016 17:20:35 Checking base
-06.02.2016 17:20:35 Get OS version
-06.02.2016 17:20:35 Get devices list
-06.02.2016 17:20:35 All devices installed
-06.02.2016 17:20:46 Program exit with exitcode 0
-06.02.2016 17:20:51 Program started
-06.02.2016 17:20:51 Checking base
-06.02.2016 17:20:51 Get OS version
-06.02.2016 17:20:51 Get devices list
-06.02.2016 17:20:52 All devices installed
-06.02.2016 17:20:53 Program exit with exitcode 0
-06.02.2016 17:24:10 Program started
-06.02.2016 17:24:10 Checking base
-06.02.2016 17:24:10 Get OS version
-06.02.2016 17:24:10 Get devices list
-06.02.2016 17:24:10 All devices installed
-06.02.2016 17:24:11 Program exit with exitcode 0
-06.02.2016 17:32:40 Program started
-06.02.2016 17:32:40 Checking base
-06.02.2016 17:32:40 Get OS version
-06.02.2016 17:32:40 Get devices list
-06.02.2016 17:32:41 All devices installed
-06.02.2016 17:32:42 Program exit with exitcode 0
-06.02.2016 17:35:18 Program started
-06.02.2016 17:35:18 Checking base
-06.02.2016 17:35:18 Get OS version
-06.02.2016 17:35:18 Get devices list
-06.02.2016 17:35:18 All devices installed
-06.02.2016 17:35:19 Program exit with exitcode 0
-06.02.2016 17:59:52 Program started
-06.02.2016 17:59:53 Checking base
-06.02.2016 17:59:53 Get OS version
-06.02.2016 17:59:53 Get devices list
-06.02.2016 17:59:53 All devices installed
-06.02.2016 17:59:54 Program exit with exitcode 0
+06.02.2016 19:03:13 Program started
+06.02.2016 19:03:13 Checking base
+06.02.2016 19:03:13 Base error #0
+06.02.2016 19:04:44 Program exit with exitcode 5
+06.02.2016 19:04:48 Program started
+06.02.2016 19:04:48 Checking base
+06.02.2016 19:04:48 Base error #0
+06.02.2016 19:04:49 Program exit with exitcode 5
+06.02.2016 19:05:22 Program started
+06.02.2016 19:05:22 Checking base
+06.02.2016 19:05:22 Base error #0
+06.02.2016 19:05:27 Program exit with exitcode 5
+06.02.2016 19:06:07 Program started
+06.02.2016 19:06:07 Checking base
+06.02.2016 19:06:07 Base error #0
+06.02.2016 19:06:15 Program exit with exitcode 5
+06.02.2016 19:06:57 Program started
+06.02.2016 19:06:57 Checking base
+06.02.2016 19:06:57 Get OS version
+06.02.2016 19:06:57 Get devices list
+06.02.2016 19:06:59 Print devices
+06.02.2016 19:07:07 Search drivers
+06.02.2016 19:07:07 Search done. Printing
+06.02.2016 19:07:50 Program started
+06.02.2016 19:07:50 Checking base
+06.02.2016 19:07:50 Get OS version
+06.02.2016 19:07:50 Get devices list
+06.02.2016 19:07:51 Print devices
+06.02.2016 19:07:53 Search drivers
+06.02.2016 19:07:53 Search done. Printing
+06.02.2016 19:08:40 Program started
+06.02.2016 19:08:40 Checking base
+06.02.2016 19:08:40 Get OS version
+06.02.2016 19:08:40 Get devices list
+06.02.2016 19:08:41 Print devices
+06.02.2016 19:08:42 Search drivers
+06.02.2016 19:08:42 Search done. Printing
+06.02.2016 19:09:14 Program started
+06.02.2016 19:09:14 Checking base
+06.02.2016 19:09:14 Get OS version
+06.02.2016 19:09:14 Get devices list
+06.02.2016 19:09:15 Print devices
+06.02.2016 19:09:18 Search drivers
+06.02.2016 19:09:18 Search done. Printing
+06.02.2016 19:09:54 Program exit with exitcode 0
+06.02.2016 19:19:09 Program started
+06.02.2016 19:19:09 Checking base
+06.02.2016 19:19:09 Get OS version
+06.02.2016 19:19:09 Get devices list
+06.02.2016 19:19:11 Print devices
+06.02.2016 19:19:13 Search drivers
+06.02.2016 19:19:13 Search done. No drivers found
+06.02.2016 19:19:13 Program exit with exitcode 0
+06.02.2016 19:19:27 Program started
+06.02.2016 19:19:27 Checking base
+06.02.2016 19:19:27 Get OS version
+06.02.2016 19:19:27 Get devices list
+06.02.2016 19:19:28 Print devices
+06.02.2016 19:19:30 Search drivers
+06.02.2016 19:19:30 Search done. No drivers found
+06.02.2016 19:19:31 Program exit with exitcode 0
+06.02.2016 19:21:27 Program started
+06.02.2016 19:21:27 Checking base
+06.02.2016 19:21:27 Get OS version
+06.02.2016 19:21:27 Get devices list
+06.02.2016 19:21:29 Print devices
+06.02.2016 19:21:30 Search drivers
+06.02.2016 19:21:30 Search done. No drivers found
+06.02.2016 19:21:30 Program exit with exitcode 0
+06.02.2016 19:22:42 Program started
+06.02.2016 19:22:42 Checking base
+06.02.2016 19:22:42 Get OS version
+06.02.2016 19:22:42 Get devices list
+06.02.2016 19:22:44 Print devices
+06.02.2016 19:22:45 Search drivers
+06.02.2016 19:22:45 Search done. No drivers found
+06.02.2016 19:22:45 Program exit with exitcode 0
+06.02.2016 19:23:23 Program started
+06.02.2016 19:23:23 Checking base
+06.02.2016 19:23:23 Get OS version
+06.02.2016 19:23:23 Get devices list
+06.02.2016 19:23:24 Print devices
+06.02.2016 19:23:25 Search drivers
+06.02.2016 19:23:25 Search done. No drivers found
+06.02.2016 19:23:25 Program exit with exitcode 0
+06.02.2016 19:24:20 Program started
+06.02.2016 19:24:20 Checking base
+06.02.2016 19:24:20 Get OS version
+06.02.2016 19:24:20 Get devices list
+06.02.2016 19:24:22 Print devices
+06.02.2016 19:24:22 Search drivers
+06.02.2016 19:24:22 Search done. No drivers found
+06.02.2016 19:24:22 Program exit with exitcode 0
+06.02.2016 19:25:02 Program started
+06.02.2016 19:25:02 Checking base
+06.02.2016 19:25:02 Get OS version
+06.02.2016 19:25:02 Get devices list
+06.02.2016 19:25:03 Print devices
+06.02.2016 19:25:04 Search drivers
+06.02.2016 19:25:04 Search done. No drivers found
+06.02.2016 19:25:04 Program exit with exitcode 0
+06.02.2016 19:26:04 Program started
+06.02.2016 19:26:04 Checking base
+06.02.2016 19:26:04 Get OS version
+06.02.2016 19:26:04 Get devices list
+06.02.2016 19:26:05 Print devices
+06.02.2016 19:26:06 Search drivers
+06.02.2016 19:26:06 Search done. No drivers found
+06.02.2016 19:26:06 Program exit with exitcode 0
+06.02.2016 19:26:33 Program started
+06.02.2016 19:26:33 Checking base
+06.02.2016 19:26:33 Get OS version
+06.02.2016 19:26:33 Get devices list
+06.02.2016 19:26:34 Print devices
+06.02.2016 19:26:35 Search drivers
+06.02.2016 19:26:35 Search done. No drivers found
+06.02.2016 19:26:35 Program exit with exitcode 0
+06.02.2016 19:27:00 Program started
+06.02.2016 19:27:00 Checking base
+06.02.2016 19:27:00 Get OS version
+06.02.2016 19:27:00 Get devices list
+06.02.2016 19:27:01 Print devices
+06.02.2016 19:27:02 Search drivers
+06.02.2016 19:27:02 Search done. No drivers found
+06.02.2016 19:27:02 Program exit with exitcode 0
+06.02.2016 19:27:34 Program started
+06.02.2016 19:27:34 Checking base
+06.02.2016 19:27:34 Get OS version
+06.02.2016 19:27:34 Get devices list
+06.02.2016 19:27:36 Print devices
+06.02.2016 19:27:39 Search drivers
+06.02.2016 19:27:39 Search done. Printing
+06.02.2016 19:28:18 Program exit with exitcode 0
+06.02.2016 19:29:37 Program started
+06.02.2016 19:29:37 Checking base
+06.02.2016 19:29:37 Get OS version
+06.02.2016 19:29:37 Get devices list
+06.02.2016 19:29:38 Print devices
+06.02.2016 19:29:39 Search drivers
+06.02.2016 19:29:39 Search done. Printing
+06.02.2016 19:29:44 Program exit with exitcode 0
+06.02.2016 19:30:51 Program started
+06.02.2016 19:30:51 Checking base
+06.02.2016 19:30:51 Get OS version
+06.02.2016 19:30:51 Get devices list
+06.02.2016 19:30:52 Print devices
+06.02.2016 19:31:09 Search drivers
+06.02.2016 19:31:09 Search done. Printing
+06.02.2016 19:31:19 Program exit with exitcode 0
+06.02.2016 19:33:04 Program started
+06.02.2016 19:33:04 Checking base
+06.02.2016 19:33:04 Get OS version
+06.02.2016 19:33:04 Get devices list
+06.02.2016 19:33:05 Print devices
+06.02.2016 19:33:06 Search drivers
+06.02.2016 19:33:06 Search done. No drivers found
+06.02.2016 19:33:06 Program exit with exitcode 0
+06.02.2016 19:33:20 Program started
+06.02.2016 19:33:20 Checking base
+06.02.2016 19:33:20 Get OS version
+06.02.2016 19:33:20 Get devices list
+06.02.2016 19:33:21 Print devices
+06.02.2016 19:33:22 Search drivers
+06.02.2016 19:33:22 Search done. Printing
+06.02.2016 19:33:26 Program exit with exitcode 0

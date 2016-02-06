@@ -57,13 +57,13 @@ namespace RDInst
             PrtLog(DateTime.Now + " Checking base", true);
             
             if (!Directory.Exists(@"Drivers\7x86") || !Directory.Exists(@"Drivers\7x64") || !Directory.Exists(@"Drivers\XP") || !File.Exists(@"base7x86.ini") || !File.Exists(@"base7x64.ini") || !File.Exists(@"baseXP.ini"))
-                MakeError("Base error #0", "Error: the drivers base is corrupted.\nPlease, reinstall the program!", 5);
+                MakeError("Base error #0", "\nError: the drivers base is corrupted.\nPlease, reinstall the program!\n", 5);
             
             FileInfo fi = new FileInfo(@"base7x86.ini");
             FileInfo fi2 = new FileInfo(@"base7x64.ini");
             FileInfo fi3 = new FileInfo(@"baseXP.ini");
             if (fi.Length == 0 || fi2.Length == 0 || fi3.Length == 0)
-                MakeError("Base error #1", "Error: one of main base files is empty.\nPlease, reinstall the program!", 7);
+                MakeError("Base error #1", "\nError: one of main base files is empty.\nPlease, reinstall the program!\n", 7);
             
             PrtLog(DateTime.Now + " Get OS version", true);
             switch (Environment.OSVersion.Version.ToString().Substring(0, 3)) { //get only 3 digits of version
@@ -138,15 +138,14 @@ namespace RDInst
             }
             else {
                 PrtLog(DateTime.Now + " All devices installed", true);
-                Prt("All devices are already installed!\nThank you for using program!\n", true);
-                Wait();
+                Prt("All devices are already installed!\n", true);
                 return false;
             }
         }
 
         static private List<string> GetIDs(string _s, char token) {
             List<string> IDs = new List<string>();
-            if (!_s.StartsWith("PCI") || !_s.StartsWith("USB")) { //add more types!
+            if (!_s.StartsWith("PCI") && !_s.StartsWith("USB")) { //add more types!
                 return IDs; //this is not dev id, ignoring
             }
             string ID = "";
@@ -166,9 +165,10 @@ namespace RDInst
             Prt("\nRDInst will start searching for needed drivers in base.", true);
             Wait();
             PrtLog(DateTime.Now + " Search drivers", true);
-            Prt("Searching for needed drivers...\nPlease wait!", true);
+            Prt("\nSearching for needed drivers...\nPlease wait!\n", true);
 
             //searching for drivers
+            int DriversFound = 0;
             using (StreamReader sr = new StreamReader(@"base" + OSVer + ".ini")) {
                 string str;
                 while ((str = sr.ReadLine()) != null) {
@@ -181,18 +181,26 @@ namespace RDInst
                                 tmp.DevID = Devices[i].DevID;
                                 tmp.DevDrv = ids[ids.Count - 1]; //last id is main driver file
                                 Devices[i] = tmp;
+                                DriversFound++;
                             }
                         }
                     }
                 }
 
                 //printing result
+                if (DriversFound == 0) {
+                    PrtLog(DateTime.Now + " Search done. No drivers found", true);
+                    Prt("Sorry, there are no drivers found for your devices. :(", true);
+                    return;
+                }
                 PrtLog(DateTime.Now + " Search done. Printing", true);
                 Prt("Devices, for those drivers WERE found:", true);
                 PrintDevNames(1);
-                Prt("Devices, for those drivers WERE NOT found:", true);
-                PrintDevNames(2);
-                Prt("\nRDInst will now start installing drivers. ;)", true);
+                if ((Devices.Count - DriversFound) != 0) {
+                    Prt("\n\nDevices, for those drivers WERE NOT found:", true);
+                    PrintDevNames(2);
+                }
+                Prt("\n\nRDInst will now start installing drivers. ;)", true);
                 Wait();
 
                 //installing drivers
@@ -206,7 +214,9 @@ namespace RDInst
 
         static int OnExit() {
             //write a code here
+            Prt("Thank you for using program!\n", true);
             PrtLog(DateTime.Now + " Program exit with exitcode " + ExitCode.ToString(), true);
+            Wait();
             return ExitCode;
         }
 
