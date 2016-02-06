@@ -8,7 +8,15 @@ namespace RDInst
 {
     class Program
     {
-        static ManagementObjectCollection devs;
+        private struct Installator {
+            public string DevName { get; set; }
+            public string DevID { get; set; }
+            public string DevDrv { get; set; }
+        }
+
+        static int MaxDevices = 50; //
+        static Installator[] Devices = new Installator[MaxDevices];
+        static int DevicesCount = 0;
         static int ExitCode = 0;
 
         static private void Prt(string _txt, bool _line = false) {
@@ -41,13 +49,9 @@ namespace RDInst
             //check drivers base
         }
 
-        static private void PrintDevNames(ManagementObjectCollection _c) {
-            foreach (ManagementObject obj in _c) {
-                string t = obj.GetPropertyValue("DeviceName").ToString();
-                if (t != null && t != "") {
-                    t += obj.GetPropertyValue("DeviceID").ToString();
-                    Prt(t, true);
-                }
+        static private void PrintDevNames(Installator[] _dvs) {
+            for (int i = 0; i < DevicesCount; ++i) {
+                Prt(_dvs[i].DevName + " (" + _dvs[i].DevID + ")", true);
             }
         }
 
@@ -55,8 +59,18 @@ namespace RDInst
             PrtLog(DateTime.Now + " Get devices list", true);
             Prt("Getting a list of uninstalled devices...\n", true);
             try {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * from Win32_PnPEntity where Availability = 12 or Availability = 11"); //11 - not installed, 12 - error
-                devs = searcher.Get();
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * from Win32_PnPEntity where Availability = 1 or Availability = 12 or Availability = 11"); //11 - not installed, 12 - error
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    string t = obj.GetPropertyValue("DeviceName").ToString();
+                    if (t != null && t != "")
+                    {
+                        Devices[DevicesCount].DevName = t;
+                        Devices[DevicesCount].DevID = obj.GetPropertyValue("DeviceID").ToString();
+                        Devices[DevicesCount].DevDrv = null;
+                        DevicesCount++;
+                    }
+                }
             }
             catch (Exception e) {
                 ExitCode = 10;
@@ -67,8 +81,8 @@ namespace RDInst
         }
 
         static private bool CheckDevices() {
-            if (devs.Count != 0) {
-                PrintDevNames(devs);
+            if (DevicesCount != 0) {
+                PrintDevNames(Devices);
                 //write a code here
                 return true; //there are uninstalled devices
             }
