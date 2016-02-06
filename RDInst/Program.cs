@@ -14,7 +14,7 @@ namespace RDInst
             public string DevDrv { get; set; }
         }
 
-        static int MaxDevices = 50; //
+        static int MaxDevices = 50; //remove this in future
         static Installator[] Devices = new Installator[MaxDevices];
         static int DevicesCount = 0;
         static int ExitCode = 0;
@@ -25,7 +25,7 @@ namespace RDInst
         }
 
         static private void Wait() {
-            Prt("To continue press <Enter>...", true);
+            Prt("To continue press <Enter>...", false);
             Console.ReadLine();
         }
 
@@ -50,23 +50,25 @@ namespace RDInst
         }
 
         static private void PrintDevNames(Installator[] _dvs) {
+            Prt("==============================================================", true);
             for (int i = 0; i < DevicesCount; ++i) {
                 Prt(_dvs[i].DevName + " (" + _dvs[i].DevID + ")", true);
             }
+            Prt("==============================================================", true);
         }
 
         static private void GetUnDevicesList() {
             PrtLog(DateTime.Now + " Get devices list", true);
             Prt("Getting a list of uninstalled devices...\n", true);
             try {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * from Win32_PnPEntity where Availability = 1 or Availability = 12 or Availability = 11"); //11 - not installed, 12 - error
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status = 'Error'"); //11 - not installed, 12 - error
                 foreach (ManagementObject obj in searcher.Get())
                 {
-                    string t = obj.GetPropertyValue("DeviceName").ToString();
-                    if (t != null && t != "")
+                    string t = obj.GetPropertyValue("Name").ToString();
+                    if (t != null && t != ""&& t != "ttnfd")
                     {
                         Devices[DevicesCount].DevName = t;
-                        Devices[DevicesCount].DevID = obj.GetPropertyValue("DeviceID").ToString();
+                        Devices[DevicesCount].DevID = obj.GetPropertyValue("DeviceID").ToString().Substring(0, 21);
                         Devices[DevicesCount].DevDrv = null;
                         DevicesCount++;
                     }
@@ -82,6 +84,7 @@ namespace RDInst
 
         static private bool CheckDevices() {
             if (DevicesCount != 0) {
+                PrtLog(DateTime.Now + " Print devices", true);
                 PrintDevNames(Devices);
                 //write a code here
                 return true; //there are uninstalled devices
@@ -95,6 +98,8 @@ namespace RDInst
         }
 
         static void InstallDrivers() {
+            Prt("\nRDInst will start searching needed drivers in base.", true);
+            Wait();
             PrtLog(DateTime.Now + " Install drivers", true);
             Prt("Installing needed drivers...\nPlease wait!", true);
             //load drivers base
