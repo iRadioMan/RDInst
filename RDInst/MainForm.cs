@@ -14,12 +14,12 @@ namespace RDInst
 {
     public partial class MainForm : Form
     {
-        [DllImport("setupapi.dll", EntryPoint = "InstallHinfSection", CallingConvention = CallingConvention.StdCall)] //inf installer import library
-        public static extern void InstallHinfSection(
+        [DllImport("advpack.dll", EntryPoint = "LaunchINFSection", CallingConvention = CallingConvention.StdCall)] //inf installer import library
+        public static extern void LaunchINFSection(
             [In] IntPtr hwnd,
-            [In] IntPtr ModuleHandle,
-            [In, MarshalAs(UnmanagedType.LPWStr)] string CmdLineBuffer,
-            int nCmdShow);
+            [In] IntPtr hInstance,
+            [In, MarshalAs(UnmanagedType.LPStr)] string pszParams,
+            int nShow);
 
         private struct Installator
         {
@@ -214,7 +214,8 @@ namespace RDInst
                 {
                     try {
                         string DrvPath = Application.StartupPath + @"\Drivers\" + Program.OSVer + @"\" + i.DevDrv;
-                        InstallHinfSection(IntPtr.Zero, IntPtr.Zero, DrvPath, 0); //FIX THIS
+                        LaunchINFSection(IntPtr.Zero, IntPtr.Zero, DrvPath + ",,,4,N", 0);
+                        //InstallHinfSection(IntPtr.Zero, IntPtr.Zero, DrvPath, 0); //FIX THIS
                     }
                     catch (Exception e) {
                         Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + e.ToString(), true);
