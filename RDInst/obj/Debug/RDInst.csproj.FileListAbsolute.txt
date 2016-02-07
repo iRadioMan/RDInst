@@ -12,3 +12,7 @@ C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.MainForm.resources
 C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.csproj.GenerateResource.Cache
 C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.csprojResolveAssemblyReference.cache
 C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.Properties.Resources.resources
+D:\RDInst\RDInst\obj\Debug\RDInst.csprojResolveAssemblyReference.cache
+D:\RDInst\RDInst\obj\Debug\RDInst.MainForm.resources
+D:\RDInst\RDInst\obj\Debug\RDInst.Properties.Resources.resources
+D:\RDInst\RDInst\obj\Debug\RDInst.csproj.GenerateResource.Cache

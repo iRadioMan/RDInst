@@ -14,7 +14,7 @@ namespace RDInst
 {
     public partial class MainForm : Form
     {
-        [DllImport("Setupapi.dll", EntryPoint = "InstallHinfSection", CallingConvention = CallingConvention.StdCall)] //inf installer import library
+        [DllImport("setupapi.dll", EntryPoint = "InstallHinfSection", CallingConvention = CallingConvention.StdCall)] //inf installer import library
         public static extern void InstallHinfSection(
             [In] IntPtr hwnd,
             [In] IntPtr ModuleHandle,
@@ -71,7 +71,7 @@ namespace RDInst
             }
             catch (Exception e)
             {
-                Program.MakeError("Get devices list error: " + e.ToString(), "ERROR while trying to get a list of devices.\nSee the log file for details.", 10);
+                Program.MakeError("Get devices list error: " + e.ToString(), "Ошибка получения списка устройств.\nСм. лог для подробностей.", 10);
             }
         }
 
@@ -125,15 +125,17 @@ namespace RDInst
         static private List<string> GetIDs(string _s, char token)
         {
             List<string> IDs = new List<string>();
-            if (!_s.StartsWith("PCI") && !_s.StartsWith("USB"))
-            { //add more types!
+            if (!_s.StartsWith("PCI") && !_s.StartsWith("USB")) { //add more types!
                 return IDs; //this is not dev id, ignoring
             }
             string ID = "";
-            for (int i = 0; i != _s.Length; ++i)
-            {
-                if (_s[i] == token)
-                {
+            for (int i = 0; i < _s.Length; ++i) {
+                if (i == _s.Length - 1) {
+                    ID += _s[i];
+                    IDs.Add(ID);
+                    break;
+                }
+                if (_s[i] == token) {
                     IDs.Add(ID);
                     ID = "";
                 }
@@ -195,7 +197,7 @@ namespace RDInst
                 }
                 progressBar1.Enabled = false;
                 button2.Enabled = true;
-                ConsoleBox.Text += "\n\nПрограмма готова к установке драйверов. ;)";
+                ConsoleBox.Text += "\nПрограмма готова к установке драйверов. ;)\n";
                 button1.Text = "Установить драйверы";
                 button1.Enabled = true;
                 DriversChecked = true;
@@ -211,7 +213,8 @@ namespace RDInst
                 if (i.DevDrv != "none")
                 {
                     try {
-                        InstallHinfSection(IntPtr.Zero, IntPtr.Zero, i.DevDrv, 0);
+                        string DrvPath = Application.StartupPath + @"\Drivers\" + Program.OSVer + @"\" + i.DevDrv;
+                        InstallHinfSection(IntPtr.Zero, IntPtr.Zero, DrvPath, 0); //FIX THIS
                     }
                     catch (Exception e) {
                         Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + e.ToString(), true);
@@ -219,16 +222,20 @@ namespace RDInst
                     }
                 }
             }
+            Program.PrtLog(DateTime.Now + " Install end", true);
+            ConsoleBox.Text += "Установка драйверов завершена.\n";
             progressBar1.Enabled = false;
+            button1.Enabled = true;
+            button2.Enabled = true;
         }
         
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DriversChecked) InstallDrivers();
-            else {
-                button1.Enabled = false;
+            button1.Enabled = false;
+            if (DriversChecked)
+                InstallDrivers();
+            else 
                 CheckDrivers();
-            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

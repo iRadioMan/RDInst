@@ -35,13 +35,13 @@ namespace RDInst
             PrtLog(DateTime.Now + " Checking base", true);
             
             if (!Directory.Exists(@"Drivers\7x86") || !Directory.Exists(@"Drivers\7x64") || !Directory.Exists(@"Drivers\XP") || !File.Exists(@"base7x86.ini") || !File.Exists(@"base7x64.ini") || !File.Exists(@"baseXP.ini"))
-                MakeError("Base error #0", "\nError: the drivers base is corrupted.\nPlease, reinstall the program!\n", 5);
+                MakeError("Base error #0", "\nОшибка: база драйверов повреждена.\nПожалуйста, переустановите программу.", 5);
             
             FileInfo fi = new FileInfo(@"base7x86.ini");
             FileInfo fi2 = new FileInfo(@"base7x64.ini");
             FileInfo fi3 = new FileInfo(@"baseXP.ini");
             if (fi.Length == 0 || fi2.Length == 0 || fi3.Length == 0)
-                MakeError("Base error #1", "\nError: one of main base files is empty.\nPlease, reinstall the program!\n", 7);
+                MakeError("Base error #1", "\nОшибка: один или несколько основных файлов базы пусты.\nПожалуйста, переустановите программу.", 7);
             
             PrtLog(DateTime.Now + " Get OS version", true);
             switch (Environment.OSVersion.Version.ToString().Substring(0, 3)) { //get only 3 symbols of version
@@ -57,7 +57,7 @@ namespace RDInst
                     }
                     break;
                 default:
-                    MakeError("Unsupported OS", "Warning: your OS is not supported. Sorry!\nRDInst will now exit...", 9);
+                    MakeError("Unsupported OS", "Внимание, ваша версия ОС не поддерживается. Извините!\nПрограмма завершит свою работу...", 9);
                     break;
             }
         }
