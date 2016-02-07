@@ -51,7 +51,7 @@ namespace RDInst
             Program.PrtLog(DateTime.Now + " Get devices list", true);
             try
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status = 'Error'"); //11 - not installed, 12 - error
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status = 'Error' OR Service = 'vga'"); //11 - not installed, 12 - error
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     string t = obj.GetPropertyValue("Name").ToString();
@@ -187,7 +187,7 @@ namespace RDInst
                 RefreshDevicesList(0, 1);
                 if ((Devices.Count - DriversFound) != 0)
                 {
-                    label2.Text = "Для этих устройств найдены драйверы:";
+                    label2.Text = "Для этих устройств НЕ найдены драйверы:";
                     label2.Visible = true;
                     RefreshDevicesList(1,2);
                 }
@@ -210,16 +210,20 @@ namespace RDInst
             {
                 if (i.DevDrv != "none")
                 {
-                    string DrvPath = Application.StartupPath + @"\Drivers\" + Program.OSVer + @"\" + i.DevDrv;
                     string arch = "";
                     for (int c = 0; i.DevDrv[c] != '\\'; ++c) {
                         arch += i.DevDrv[c];
                     }
-                    if (Directory.Exists(@"Drivers\" + Program.OSVer + @"\" + arch)) Directory.Delete(@"Drivers\" + Program.OSVer + @"\" + arch, true);
-                    Process z = Process.Start(@"Utils\7z.exe", "x -y " + arch + ".7z");
+                    if (Directory.Exists(arch)) Directory.Delete(arch, true);
+                    Process z = new Process();
+                    z.StartInfo.FileName = @"Utils\7z.exe";
+                    z.StartInfo.Arguments = @"x -y Drivers\" + Program.OSVer + @"\" + arch + ".7z";
+                    z.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    z.Start();
                     z.WaitForExit();
+                    string DrvPath = Application.StartupPath + @"\" + i.DevDrv;
                     int result = DriverPackagePreinstall(DrvPath, 0);
-                    Directory.Delete(@"Drivers\" + Program.OSVer + @"\" + arch, true);
+                    Directory.Delete(arch, true);
                     if (result != 0) {
                         Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + result, true);
                         ConsoleBox.Text += "[!] Ошибка установки драйвера для " + i.DevName + ". См. лог для подробностей.\n";

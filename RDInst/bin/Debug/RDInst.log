@@ -621,3 +621,71 @@
 07.02.2016 19:06:46 Get devices list
 07.02.2016 19:06:46 All devices installed
 07.02.2016 19:06:48 Program exit with exitcode 0
+07.02.2016 19:32:49 Program started
+07.02.2016 19:32:49 Checking base
+07.02.2016 19:32:49 Get OS version
+07.02.2016 19:32:49 Get devices list
+07.02.2016 19:32:51 Print devices
+07.02.2016 19:32:55 Program exit with exitcode 0
+07.02.2016 19:36:49 Program started
+07.02.2016 19:36:49 Checking base
+07.02.2016 19:36:49 Get OS version
+07.02.2016 19:36:49 Get devices list
+07.02.2016 19:36:51 Print devices
+07.02.2016 19:37:03 Search drivers
+07.02.2016 19:37:03 Search done. Printing
+07.02.2016 19:37:15 Program exit with exitcode 0
+07.02.2016 19:37:39 Program started
+07.02.2016 19:37:39 Checking base
+07.02.2016 19:37:39 Get OS version
+07.02.2016 19:37:39 Get devices list
+07.02.2016 19:37:40 Print devices
+07.02.2016 19:37:42 Search drivers
+07.02.2016 19:37:42 Search done. Printing
+07.02.2016 19:39:21 Program started
+07.02.2016 19:39:21 Checking base
+07.02.2016 19:39:21 Get OS version
+07.02.2016 19:39:21 Get devices list
+07.02.2016 19:39:23 Print devices
+07.02.2016 19:39:25 Search drivers
+07.02.2016 19:39:25 Search done. Printing
+07.02.2016 19:41:01 Program started
+07.02.2016 19:41:01 Checking base
+07.02.2016 19:41:01 Get OS version
+07.02.2016 19:41:01 Get devices list
+07.02.2016 19:41:03 Print devices
+07.02.2016 19:41:05 Search drivers
+07.02.2016 19:41:05 Search done. Printing
+07.02.2016 19:42:39 Program started
+07.02.2016 19:42:39 Checking base
+07.02.2016 19:42:39 Get OS version
+07.02.2016 19:42:40 Get devices list
+07.02.2016 19:42:41 Print devices
+07.02.2016 19:42:45 Search drivers
+07.02.2016 19:42:45 Search done. Printing
+07.02.2016 19:42:47 Error install PCI\VEN_1969&DEV_2062: 3
+07.02.2016 19:42:47 Install end
+07.02.2016 19:47:11 Program started
+07.02.2016 19:47:11 Checking base
+07.02.2016 19:47:11 Get OS version
+07.02.2016 19:47:11 Get devices list
+07.02.2016 19:47:12 Print devices
+07.02.2016 19:47:15 Search drivers
+07.02.2016 19:47:15 Search done. Printing
+07.02.2016 19:49:46 Program started
+07.02.2016 19:49:46 Checking base
+07.02.2016 19:49:46 Get OS version
+07.02.2016 19:49:46 Get devices list
+07.02.2016 19:49:48 Print devices
+07.02.2016 19:49:49 Search drivers
+07.02.2016 19:49:49 Search done. Printing
+07.02.2016 19:50:53 Successful install PCI\VEN_1969&DEV_2062
+07.02.2016 19:50:53 Install end
+07.02.2016 19:56:16 Program started
+07.02.2016 19:56:16 Checking base
+07.02.2016 19:56:16 Get OS version
+07.02.2016 19:56:17 Get devices list
+07.02.2016 19:56:18 Print devices
+07.02.2016 19:56:20 Search drivers
+07.02.2016 19:56:20 Search done. No drivers found
+07.02.2016 19:56:24 Program exit with exitcode 0
