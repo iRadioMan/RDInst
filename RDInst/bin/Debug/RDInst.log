@@ -603,3 +603,15 @@
 07.02.2016 16:25:59 Get devices list
 07.02.2016 16:26:01 All devices installed
 07.02.2016 16:26:06 Program exit with exitcode 0
+07.02.2016 15:20:36 Program started
+07.02.2016 15:20:36 Checking base
+07.02.2016 15:20:36 Base error #0
+07.02.2016 15:20:50 Program exit with exitcode 5
+07.02.2016 15:24:12 Program started
+07.02.2016 15:24:12 Checking base
+07.02.2016 15:24:12 Get OS version
+07.02.2016 15:24:18 Get devices list
+07.02.2016 15:24:55 Print devices
+07.02.2016 15:25:43 Search drivers
+07.02.2016 15:25:43 Search done. No drivers found
+07.02.2016 15:26:04 Program exit with exitcode 0
