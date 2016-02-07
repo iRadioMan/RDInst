@@ -14,12 +14,8 @@ namespace RDInst
 {
     public partial class MainForm : Form
     {
-        [DllImport("advpack.dll", EntryPoint = "LaunchINFSection", CallingConvention = CallingConvention.StdCall)] //inf installer import library
-        public static extern void LaunchINFSection(
-            [In] IntPtr hwnd,
-            [In] IntPtr hInstance,
-            [In, MarshalAs(UnmanagedType.LPStr)] string pszParams,
-            int nShow);
+        [DllImport("DIFXApi.dll", CharSet = CharSet.Unicode)]
+        public static extern Int32 DriverPackagePreinstall(string _path, Int32 _flags);
 
         private struct Installator
         {
@@ -206,28 +202,37 @@ namespace RDInst
 
         void InstallDrivers() {
             //installing drivers
+            int InstalledDrivers = 0;
+            ConsoleBox.Text += "Установка драйверов. Пожалуйста, подождите...\n";
             progressBar1.Enabled = true;
             button2.Enabled = false;
             foreach (Installator i in Devices)
             {
                 if (i.DevDrv != "none")
                 {
-                    try {
-                        string DrvPath = Application.StartupPath + @"\Drivers\" + Program.OSVer + @"\" + i.DevDrv;
-                        LaunchINFSection(IntPtr.Zero, IntPtr.Zero, DrvPath + ",,,4,N", 0);
-                        //InstallHinfSection(IntPtr.Zero, IntPtr.Zero, DrvPath, 0); //FIX THIS
-                    }
-                    catch (Exception e) {
-                        Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + e.ToString(), true);
+                    string DrvPath = Application.StartupPath + @"\Drivers\" + Program.OSVer + @"\" + i.DevDrv;
+                    int result = DriverPackagePreinstall(DrvPath, 0);
+                    if (result != 0) {
+                        Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + result, true);
                         ConsoleBox.Text += "[!] Ошибка установки драйвера для " + i.DevName + ". См. лог для подробностей.\n";
+                    }
+                    else {
+                        InstalledDrivers++;
+                        Program.PrtLog(DateTime.Now + " Successful install " + i.DevID, true);
+                        ConsoleBox.Text += "Драйвер для " + i.DevName + "установлен успешно.\n";
                     }
                 }
             }
             Program.PrtLog(DateTime.Now + " Install end", true);
-            ConsoleBox.Text += "Установка драйверов завершена.\n";
+            ConsoleBox.Text += "Установка драйверов завершена.";
             progressBar1.Enabled = false;
-            button1.Enabled = true;
             button2.Enabled = true;
+            if (InstalledDrivers != 0) {
+                if (DialogResult.Yes == MessageBox.Show("Для вступления изменений в силу нужна перезагрузка. Перезагрузить компьютер сейчас?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)) {
+                    Process.Start("shutdown.exe", "-r -t 0");
+                    Environment.Exit(0);
+                }
+            }
         }
         
         private void button1_Click(object sender, EventArgs e)
