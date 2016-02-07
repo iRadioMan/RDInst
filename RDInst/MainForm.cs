@@ -211,7 +211,15 @@ namespace RDInst
                 if (i.DevDrv != "none")
                 {
                     string DrvPath = Application.StartupPath + @"\Drivers\" + Program.OSVer + @"\" + i.DevDrv;
+                    string arch = "";
+                    for (int c = 0; i.DevDrv[c] != '\\'; ++c) {
+                        arch += i.DevDrv[c];
+                    }
+                    if (Directory.Exists(@"Drivers\" + Program.OSVer + @"\" + arch)) Directory.Delete(@"Drivers\" + Program.OSVer + @"\" + arch, true);
+                    Process z = Process.Start(@"Utils\7z.exe", "x -y " + arch + ".7z");
+                    z.WaitForExit();
                     int result = DriverPackagePreinstall(DrvPath, 0);
+                    Directory.Delete(@"Drivers\" + Program.OSVer + @"\" + arch, true);
                     if (result != 0) {
                         Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + result, true);
                         ConsoleBox.Text += "[!] Ошибка установки драйвера для " + i.DevName + ". См. лог для подробностей.\n";
