@@ -6,12 +6,21 @@ using System.Drawing;
 using System.Text;
 using System.Management;
 using System.IO;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace RDInst
 {
     public partial class MainForm : Form
     {
+        [DllImport("Setupapi.dll", EntryPoint = "InstallHinfSection", CallingConvention = CallingConvention.StdCall)] //inf installer import library
+        public static extern void InstallHinfSection(
+            [In] IntPtr hwnd,
+            [In] IntPtr ModuleHandle,
+            [In, MarshalAs(UnmanagedType.LPWStr)] string CmdLineBuffer,
+            int nCmdShow);
+
         private struct Installator
         {
             public string DevName { get; set; }
@@ -136,6 +145,7 @@ namespace RDInst
         void CheckDrivers()
         {
             progressBar1.Enabled = true;
+            button2.Enabled = false;
             ConsoleBox.Text += "Программа начинает поиск по базе драйверов...\n";
             Program.PrtLog(DateTime.Now + " Search drivers", true);
             ConsoleBox.Text += "\nПоиск необходимых драйверов...\nПожалуйста, подождите!\n";
@@ -169,6 +179,7 @@ namespace RDInst
                 if (DriversFound == 0)
                 {
                     progressBar1.Enabled = false;
+                    button2.Enabled = true;
                     Program.PrtLog(DateTime.Now + " Search done. No drivers found", true);
                     MessageBox.Show("К сожалению, программа не смогла найти ни одного драйвера для ваших устройств. :(", "Извините.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
@@ -183,6 +194,7 @@ namespace RDInst
                     RefreshDevicesList(1,2);
                 }
                 progressBar1.Enabled = false;
+                button2.Enabled = true;
                 ConsoleBox.Text += "\n\nПрограмма готова к установке драйверов. ;)";
                 button1.Text = "Установить драйверы";
                 button1.Enabled = true;
@@ -193,14 +205,21 @@ namespace RDInst
         void InstallDrivers() {
             //installing drivers
             progressBar1.Enabled = true;
+            button2.Enabled = false;
             foreach (Installator i in Devices)
             {
                 if (i.DevDrv != "none")
                 {
-                    //install driver
+                    try {
+                        InstallHinfSection(IntPtr.Zero, IntPtr.Zero, i.DevDrv, 0);
+                    }
+                    catch (Exception e) {
+                        Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + e.ToString(), true);
+                        ConsoleBox.Text += "[!] Ошибка установки драйвера для " + i.DevName + ". См. лог для подробностей.\n";
+                    }
                 }
             }
-            //progressBar1.Enabled = false;
+            progressBar1.Enabled = false;
         }
         
         private void button1_Click(object sender, EventArgs e)
@@ -210,6 +229,99 @@ namespace RDInst
                 button1.Enabled = false;
                 CheckDrivers();
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://vk.com/iradioman");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("mailto:ilyadud@mail.ru");
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("skype:ilya.tech.rad?chat");
+        }
+
+        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.java.com/ru/download/");
+        }
+
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://get.adobe.com/ru/flashplayer");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+            button2.Enabled = false;
+            ConsoleBox.Text += "\nУстановка дополнительных утилит. Пожалуйста, подождите...\n";
+
+            Process p = new Process();
+            if (checkBox1.Checked) { 
+                p.StartInfo.FileName = @"Utils\DirectX.exe";
+                try { 
+                    p.Start();
+                    p.WaitForExit();
+                }
+                catch (Exception ex) {
+                    Program.PrtLog(DateTime.Now + " Error install DirectX: " + ex.ToString(), true);
+                    ConsoleBox.Text += "[!] Ошибка установки DirectX. См. лог для подробностей.\n";
+                }
+                checkBox1.Checked = false;
+                checkBox1.Enabled = false;
+            }
+            if (checkBox2.Checked)
+            {
+                p.StartInfo.FileName = @"Utils\dotNetfz.exe";
+                try {
+                    p.Start();
+                    p.WaitForExit();
+                }
+                catch (Exception ex) {
+                    Program.PrtLog(DateTime.Now + " Error install .NET: " + ex.ToString(), true);
+                    ConsoleBox.Text += "[!] Ошибка установки Microsoft .NET Framework. См. лог для подробностей.\n";
+                }
+                checkBox2.Checked = false;
+                checkBox2.Enabled = false;
+            }
+            if (checkBox3.Checked)
+            {
+                p.StartInfo.FileName = @"Utils\RuntimePack.exe";
+                try {
+                    p.Start();
+                    p.WaitForExit();
+                }
+                catch (Exception ex) {
+                    Program.PrtLog(DateTime.Now + " Error install Runtime Pack: " + ex.ToString(), true);
+                    ConsoleBox.Text += "[!] Ошибка установки Runtime Pack. См. лог для подробностей.\n";
+                }
+                checkBox3.Checked = false;
+                checkBox3.Enabled = false;
+            }
+            if (checkBox4.Checked)
+            {
+                p.StartInfo.FileName = @"Utils\Visual_C.exe";
+                try {
+                    p.Start();
+                    p.WaitForExit();
+                }
+                catch (Exception ex) {
+                    Program.PrtLog(DateTime.Now + " Error install VC++ Redist: " + ex.ToString(), true);
+                    ConsoleBox.Text += "[!] Ошибка установки Microsoft Visual C++ Redist. См. лог для подробностей.\n";
+                }
+                checkBox4.Checked = false;
+                checkBox4.Enabled = false;
+            }
+
+            ConsoleBox.Text += "Установка завершена.\n";
+            button1.Enabled = true;
+            button2.Enabled = true;
         }
     }
 }

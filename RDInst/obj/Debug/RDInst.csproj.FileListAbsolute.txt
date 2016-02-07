@@ -11,3 +11,4 @@ C:\RadioMan\Dev\RDInst\RDInst\bin\Debug\RDInst.pdb
 C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.MainForm.resources
 C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.csproj.GenerateResource.Cache
 C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.csprojResolveAssemblyReference.cache
+C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.Properties.Resources.resources
