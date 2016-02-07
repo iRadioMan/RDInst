@@ -3,3 +3,11 @@ D:\RDInst\RDInst\bin\Debug\RDInst.exe
 D:\RDInst\RDInst\bin\Debug\RDInst.pdb
 D:\RDInst\RDInst\obj\Debug\RDInst.exe
 D:\RDInst\RDInst\obj\Debug\RDInst.pdb
+C:\RadioMan\Dev\RDInst\RDInst\bin\Debug\RDInst.exe.config
+C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.exe
+C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.pdb
+C:\RadioMan\Dev\RDInst\RDInst\bin\Debug\RDInst.exe
+C:\RadioMan\Dev\RDInst\RDInst\bin\Debug\RDInst.pdb
+C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.MainForm.resources
+C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.csproj.GenerateResource.Cache
+C:\RadioMan\Dev\RDInst\RDInst\obj\Debug\RDInst.csprojResolveAssemblyReference.cache
