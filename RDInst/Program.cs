@@ -44,7 +44,7 @@ namespace RDInst
                 MakeError("Base error #1", "\nОшибка: один или несколько основных файлов базы пусты.\nПожалуйста, переустановите программу.", 7);
             
             PrtLog(DateTime.Now + " Get OS version", true);
-            switch (Environment.OSVersion.Version.ToString().Substring(0, 3)) { //get only 3 symbols of version
+            switch (Environment.OSVersion.Version.ToString().Substring(0, 3)) { //получаем только 3 символа из строки версии
                 case "5.1":
                     OSVer = "XP";
                     break;
@@ -71,7 +71,6 @@ namespace RDInst
 
         [STAThread]
         static int Main(string[] args) {
-            //the main function is simplified to maximum
             Init();
             Application.Run(new MainForm());
             return OnExit();

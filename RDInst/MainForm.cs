@@ -17,6 +17,9 @@ namespace RDInst
         [DllImport("DIFXApi.dll", CharSet = CharSet.Unicode)]
         public static extern Int32 DriverPackagePreinstall(string _path, Int32 _flags);
 
+        [DllImport("CfgMgr32.dll", SetLastError = true)]
+        public static extern int CM_Reenumerate_DevNode(int dnDevInst, int ulFlags);
+
         private struct Installator
         {
             public string DevName { get; set; }
@@ -44,7 +47,6 @@ namespace RDInst
                     winLogo.Image = RDInst.Properties.Resources.w7small;
                     break;
             }
-
             GetUnDevicesList();
             CheckDevices();
         }
@@ -57,11 +59,16 @@ namespace RDInst
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status = 'Error' OR Service = 'vga'"); //11 - not installed, 12 - error
                 foreach (ManagementObject obj in searcher.Get())
                 {
-                    string t = obj.GetPropertyValue("Name").ToString();
-                    if (t != null && t != "" && t != "ttnfd")
+                    string name = obj.GetPropertyValue("Name").ToString();
+                    string service = obj.GetPropertyValue("Service").ToString();
+                    if (name != null && name != "" && name != "ttnfd")
                     {
+                        //не добавляем видеокарту в список устройств, если на ней нестандартный драйвер
+                        if (service == "vga" && name != "Стандартный VGA графический адаптер" && name != "Standart VGA Graphics Adapter")
+                            return;
+
                         Installator tempInst = new Installator();
-                        tempInst.DevName = t;
+                        tempInst.DevName = name;
                         tempInst.DevID = obj.GetPropertyValue("DeviceID").ToString().Substring(0, 21);
                         tempInst.DevDrv = "none";
                         Devices.Add(tempInst);
@@ -110,7 +117,7 @@ namespace RDInst
                 ConsoleBox.Text += "Найдены неустановленные устройства.\n";
                 RefreshDevicesList(0, 0);
                 button1.Enabled = true;
-                return true; //there are uninstalled devices
+                return true;
             }
             else
             {
@@ -124,8 +131,8 @@ namespace RDInst
         static private List<string> GetIDs(string _s, char token)
         {
             List<string> IDs = new List<string>();
-            if (!_s.StartsWith("PCI") && !_s.StartsWith("USB")) { //add more types!
-                return IDs; //this is not dev id, ignoring
+            if (!_s.StartsWith("PCI") && !_s.StartsWith("USB")) { //добавить больше типов устройств
+                return IDs;
             }
             string ID = "";
             for (int i = 0; i < _s.Length; ++i) {
@@ -150,7 +157,7 @@ namespace RDInst
             Program.PrtLog(DateTime.Now + " Search drivers", true);
             ConsoleBox.Text += "\nПоиск необходимых драйверов...\nПожалуйста, подождите!\n";
 
-            //searching for drivers
+            //поиск драйверов по базе
             int DriversFound = 0;
             using (StreamReader sr = new StreamReader(@"base" + Program.OSVer + ".ini"))
             {
@@ -163,11 +170,11 @@ namespace RDInst
                         for (int i = 0; i < Devices.Count; ++i)
                         {
                             if (s == Devices[i].DevID)
-                            { //driver found!
+                            {
                                 Installator tmp = new Installator();
                                 tmp.DevName = Devices[i].DevName;
                                 tmp.DevID = Devices[i].DevID;
-                                tmp.DevDrv = ids[ids.Count - 1]; //last id is main driver file
+                                tmp.DevDrv = ids[ids.Count - 1]; //последний ID - установочный файл драйвера
                                 Devices[i] = tmp;
                                 DriversFound++;
                             }
@@ -175,7 +182,6 @@ namespace RDInst
                     }
                 }
 
-                //printing result
                 if (DriversFound == 0)
                 {
                     button2.Enabled = true;
@@ -202,7 +208,6 @@ namespace RDInst
         }
 
         void InstallDrivers() {
-            //installing drivers
             int InstalledDrivers = 0;
             ConsoleBox.Text += "Установка драйверов. Пожалуйста, подождите...\n";
             button2.Enabled = false;
@@ -210,20 +215,30 @@ namespace RDInst
             {
                 if (i.DevDrv != "none")
                 {
+                    Program.PrtLog(DateTime.Now + " Install " + i.DevID, true);
+                    ConsoleBox.Text += "Устанавливается драйвер для " + i.DevName + "...\n";
                     string arch = "";
-                    for (int c = 0; i.DevDrv[c] != '\\'; ++c) {
+                    for (int c = 0; i.DevDrv[c] != '\\'; ++c) { //получаем имя папки (и архива)
                         arch += i.DevDrv[c];
                     }
-                    if (Directory.Exists(arch)) Directory.Delete(arch, true);
+                    if (Directory.Exists(arch)) Directory.Delete(arch, true); //удалим распакованную папку, если она есть
                     Process z = new Process();
+                    //распакуем архив
                     z.StartInfo.FileName = @"Utils\7z.exe";
                     z.StartInfo.Arguments = @"x -y Drivers\" + arch + ".7z";
                     z.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     z.Start();
                     z.WaitForExit();
-                    string DrvPath = Application.StartupPath + @"\" + i.DevDrv;
+                    //
+                    string DrvPath = Application.StartupPath + @"\" + i.DevDrv; //получаем полный путь до inf-файла
+
+                    /* устанавливаем драйвер
+                     * TODO: процедура долгая, нужно запускать ее в отдельном потоке
+                     */
                     int result = DriverPackagePreinstall(DrvPath, 0);
-                    Directory.Delete(arch, true);
+                    
+                    Directory.Delete(arch, true); //удаляем распакованную папку
+
                     if (result != 0) {
                         Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + result, true);
                         ConsoleBox.Text += "[!] Ошибка установки драйвера для " + i.DevName + ". См. лог для подробностей.\n";
@@ -239,7 +254,8 @@ namespace RDInst
             ConsoleBox.Text += "Установка драйверов завершена.";
             button2.Enabled = true;
             if (InstalledDrivers != 0) {
-                if (DialogResult.Yes == MessageBox.Show("Для вступления изменений в силу нужна перезагрузка. Перезагрузить компьютер сейчас?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)) {
+                CM_Reenumerate_DevNode(0, 0);
+                if (DialogResult.Yes == MessageBox.Show("Для вступления изменений в силу может потребоваться перезагрузка. Перезагрузить компьютер сейчас?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)) {
                     Process.Start("shutdown.exe", "-r -t 0");
                     Environment.Exit(0);
                 }
