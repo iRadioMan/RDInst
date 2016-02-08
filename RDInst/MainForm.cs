@@ -217,7 +217,7 @@ namespace RDInst
                     if (Directory.Exists(arch)) Directory.Delete(arch, true);
                     Process z = new Process();
                     z.StartInfo.FileName = @"Utils\7z.exe";
-                    z.StartInfo.Arguments = @"x -y Drivers\" + Program.OSVer + @"\" + arch + ".7z";
+                    z.StartInfo.Arguments = @"x -y Drivers\" + arch + ".7z";
                     z.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     z.Start();
                     z.WaitForExit();
