@@ -34,7 +34,7 @@ namespace RDInst
             PrtLog(DateTime.Now + " Program started", true);
             PrtLog(DateTime.Now + " Checking base", true);
             
-            if (!Directory.Exists(@"Drivers\7x86") || !Directory.Exists(@"Drivers\7x64") || !Directory.Exists(@"Drivers\XP") || !File.Exists(@"base7x86.ini") || !File.Exists(@"base7x64.ini") || !File.Exists(@"baseXP.ini"))
+            if (!Directory.Exists(@"Drivers") || !File.Exists(@"base7x86.ini") || !File.Exists(@"base7x64.ini") || !File.Exists(@"baseXP.ini"))
                 MakeError("Base error #0", "\nОшибка: база драйверов повреждена.\nПожалуйста, переустановите программу.", 5);
             
             FileInfo fi = new FileInfo(@"base7x86.ini");
