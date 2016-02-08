@@ -33,12 +33,15 @@ namespace RDInst
             switch (Program.OSVer) {
                 case "XP":
                     OSVerLabel.Text += "Windows XP.";
+                    winLogo.Image = RDInst.Properties.Resources.wXPsmall;
                     break;
                 case "7x86":
                     OSVerLabel.Text += "Windows 7 32-бита.";
+                    winLogo.Image = RDInst.Properties.Resources.w7small;
                     break;
                 case "7x64":
                     OSVerLabel.Text += "Windows 7 64-бита.";
+                    winLogo.Image = RDInst.Properties.Resources.w7small;
                     break;
             }
 
@@ -142,7 +145,6 @@ namespace RDInst
 
         void CheckDrivers()
         {
-            progressBar1.Enabled = true;
             button2.Enabled = false;
             ConsoleBox.Text += "Программа начинает поиск по базе драйверов...\n";
             Program.PrtLog(DateTime.Now + " Search drivers", true);
@@ -176,7 +178,6 @@ namespace RDInst
                 //printing result
                 if (DriversFound == 0)
                 {
-                    progressBar1.Enabled = false;
                     button2.Enabled = true;
                     Program.PrtLog(DateTime.Now + " Search done. No drivers found", true);
                     MessageBox.Show("К сожалению, программа не смогла найти ни одного драйвера для ваших устройств. :(", "Извините.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -190,8 +191,8 @@ namespace RDInst
                     label2.Text = "Для этих устройств НЕ найдены драйверы:";
                     label2.Visible = true;
                     RefreshDevicesList(1,2);
+                    listBox2.Visible = true;
                 }
-                progressBar1.Enabled = false;
                 button2.Enabled = true;
                 ConsoleBox.Text += "\nПрограмма готова к установке драйверов. ;)\n";
                 button1.Text = "Установить драйверы";
@@ -204,7 +205,6 @@ namespace RDInst
             //installing drivers
             int InstalledDrivers = 0;
             ConsoleBox.Text += "Установка драйверов. Пожалуйста, подождите...\n";
-            progressBar1.Enabled = true;
             button2.Enabled = false;
             foreach (Installator i in Devices)
             {
@@ -237,7 +237,6 @@ namespace RDInst
             }
             Program.PrtLog(DateTime.Now + " Install end", true);
             ConsoleBox.Text += "Установка драйверов завершена.";
-            progressBar1.Enabled = false;
             button2.Enabled = true;
             if (InstalledDrivers != 0) {
                 if (DialogResult.Yes == MessageBox.Show("Для вступления изменений в силу нужна перезагрузка. Перезагрузить компьютер сейчас?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)) {
@@ -283,6 +282,7 @@ namespace RDInst
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (!checkBox1.Checked && !checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked) return;
             button1.Enabled = false;
             button2.Enabled = false;
             ConsoleBox.Text += "\nУстановка дополнительных утилит. Пожалуйста, подождите...\n";
@@ -347,6 +347,12 @@ namespace RDInst
             ConsoleBox.Text += "Установка завершена.\n";
             button1.Enabled = true;
             button2.Enabled = true;
+        }
+
+        private void ConsoleBox_TextChanged(object sender, EventArgs e)
+        {
+            ConsoleBox.SelectionStart = ConsoleBox.Text.Length;
+            ConsoleBox.ScrollToCaret();
         }
     }
 }

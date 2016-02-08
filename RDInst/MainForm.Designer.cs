@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.OSVerLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.progressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.ConsoleBox = new System.Windows.Forms.RichTextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.listBox2 = new System.Windows.Forms.ListBox();
@@ -49,6 +49,9 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.linkLabel7 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel6 = new System.Windows.Forms.LinkLabel();
+            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
@@ -59,10 +62,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ConsoleBox = new System.Windows.Forms.RichTextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.linkLabel6 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel7 = new System.Windows.Forms.LinkLabel();
+            this.winLogo = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -76,7 +76,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OSVerLabel,
-            this.progressBar1});
+            this.winLogo});
             this.statusStrip1.Location = new System.Drawing.Point(0, 490);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(714, 22);
@@ -86,16 +86,10 @@
             // 
             // OSVerLabel
             // 
+            this.OSVerLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OSVerLabel.Name = "OSVerLabel";
-            this.OSVerLabel.Size = new System.Drawing.Size(72, 17);
+            this.OSVerLabel.Size = new System.Drawing.Size(79, 17);
             this.OSVerLabel.Text = "Версия ОС: ";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(400, 16);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar1.Visible = false;
             // 
             // tabControl1
             // 
@@ -109,6 +103,19 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(714, 354);
             this.tabControl1.TabIndex = 1;
+            // 
+            // ConsoleBox
+            // 
+            this.ConsoleBox.BackColor = System.Drawing.Color.White;
+            this.ConsoleBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ConsoleBox.ForeColor = System.Drawing.Color.Black;
+            this.ConsoleBox.Location = new System.Drawing.Point(0, 356);
+            this.ConsoleBox.Name = "ConsoleBox";
+            this.ConsoleBox.ReadOnly = true;
+            this.ConsoleBox.Size = new System.Drawing.Size(714, 132);
+            this.ConsoleBox.TabIndex = 2;
+            this.ConsoleBox.Text = "";
+            this.ConsoleBox.TextChanged += new System.EventHandler(this.ConsoleBox_TextChanged);
             // 
             // tabPage1
             // 
@@ -147,6 +154,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(312, 225);
             this.listBox2.TabIndex = 3;
+            this.listBox2.Visible = false;
             // 
             // label1
             // 
@@ -313,6 +321,41 @@
             this.tabPage3.Text = "О программе";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // linkLabel7
+            // 
+            this.linkLabel7.AutoSize = true;
+            this.linkLabel7.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel7.LinkColor = System.Drawing.Color.LightSkyBlue;
+            this.linkLabel7.Location = new System.Drawing.Point(255, 284);
+            this.linkLabel7.Name = "linkLabel7";
+            this.linkLabel7.Size = new System.Drawing.Size(40, 16);
+            this.linkLabel7.TabIndex = 12;
+            this.linkLabel7.TabStop = true;
+            this.linkLabel7.Text = "TailS";
+            // 
+            // linkLabel6
+            // 
+            this.linkLabel6.AutoSize = true;
+            this.linkLabel6.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel6.LinkColor = System.Drawing.Color.LightSkyBlue;
+            this.linkLabel6.Location = new System.Drawing.Point(185, 284);
+            this.linkLabel6.Name = "linkLabel6";
+            this.linkLabel6.Size = new System.Drawing.Size(64, 16);
+            this.linkLabel6.TabIndex = 11;
+            this.linkLabel6.TabStop = true;
+            this.linkLabel6.Text = "ArturVGN";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(25, 284);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(154, 16);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Помощь в разработке:";
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -431,52 +474,11 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // ConsoleBox
+            // winLogo
             // 
-            this.ConsoleBox.BackColor = System.Drawing.Color.White;
-            this.ConsoleBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ConsoleBox.ForeColor = System.Drawing.Color.Black;
-            this.ConsoleBox.Location = new System.Drawing.Point(0, 356);
-            this.ConsoleBox.Name = "ConsoleBox";
-            this.ConsoleBox.ReadOnly = true;
-            this.ConsoleBox.Size = new System.Drawing.Size(714, 132);
-            this.ConsoleBox.TabIndex = 2;
-            this.ConsoleBox.Text = "";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(25, 284);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(154, 16);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Помощь в разработке:";
-            // 
-            // linkLabel6
-            // 
-            this.linkLabel6.AutoSize = true;
-            this.linkLabel6.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel6.LinkColor = System.Drawing.Color.LightSkyBlue;
-            this.linkLabel6.Location = new System.Drawing.Point(185, 284);
-            this.linkLabel6.Name = "linkLabel6";
-            this.linkLabel6.Size = new System.Drawing.Size(64, 16);
-            this.linkLabel6.TabIndex = 11;
-            this.linkLabel6.TabStop = true;
-            this.linkLabel6.Text = "ArturVGN";
-            // 
-            // linkLabel7
-            // 
-            this.linkLabel7.AutoSize = true;
-            this.linkLabel7.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel7.LinkColor = System.Drawing.Color.LightSkyBlue;
-            this.linkLabel7.Location = new System.Drawing.Point(255, 284);
-            this.linkLabel7.Name = "linkLabel7";
-            this.linkLabel7.Size = new System.Drawing.Size(40, 16);
-            this.linkLabel7.TabIndex = 12;
-            this.linkLabel7.TabStop = true;
-            this.linkLabel7.Text = "TailS";
+            this.winLogo.Image = global::RDInst.Properties.Resources.preferences_system_7352;
+            this.winLogo.Name = "winLogo";
+            this.winLogo.Size = new System.Drawing.Size(16, 17);
             // 
             // MainForm
             // 
@@ -517,7 +519,6 @@
         private System.Windows.Forms.RichTextBox ConsoleBox;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ToolStripStatusLabel OSVerLabel;
-        private System.Windows.Forms.ToolStripProgressBar progressBar1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
@@ -544,5 +545,6 @@
         private System.Windows.Forms.LinkLabel linkLabel7;
         private System.Windows.Forms.LinkLabel linkLabel6;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStripStatusLabel winLogo;
     }
 }
