@@ -15,7 +15,8 @@ namespace RDInst
     public partial class MainForm : Form
     {
         [DllImport("DIFXApi.dll", CharSet = CharSet.Unicode)]
-        public static extern Int32 DriverPackagePreinstall(string _path, Int32 _flags);
+        public static extern Int32 DriverPackageInstall(string _path, Int32 _flags);
+        //public static extern Int32 DriverPackagePreinstall(string _path, Int32 _flags);
 
         [DllImport("CfgMgr32.dll", SetLastError = true)]
         public static extern int CM_Reenumerate_DevNode(int dnDevInst, int ulFlags);
@@ -191,30 +192,30 @@ namespace RDInst
                         }
                     }
                 }
-
-                if (DriversFound == 0)
-                {
-                    button2.Enabled = true;
-                    Program.PrtLog(DateTime.Now + " Search done. No drivers found", true);
-                    MessageBox.Show("К сожалению, программа не смогла найти ни одного драйвера для ваших устройств. :(", "Извините.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-                Program.PrtLog(DateTime.Now + " Search done. Printing", true);
-                label1.Text = "Для этих устройств найдены драйверы:";
-                RefreshDevicesList(0, 1);
-                if ((Devices.Count - DriversFound) != 0)
-                {
-                    label2.Text = "Для этих устройств НЕ найдены драйверы:";
-                    label2.Visible = true;
-                    RefreshDevicesList(1,2);
-                    listBox2.Visible = true;
-                }
-                button2.Enabled = true;
-                ConsoleBox.Text += "\nПрограмма готова к установке драйверов. ;)\n";
-                button1.Text = "Установить драйверы";
-                button1.Enabled = true;
-                DriversChecked = true;
             }
+
+            if (DriversFound == 0)
+            {
+                button2.Enabled = true;
+                Program.PrtLog(DateTime.Now + " Search done. No drivers found", true);
+                MessageBox.Show("К сожалению, программа не смогла найти ни одного драйвера для ваших устройств. :(", "Извините.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            Program.PrtLog(DateTime.Now + " Search done. Printing", true);
+            label1.Text = "Для этих устройств найдены драйверы:";
+            RefreshDevicesList(0, 1);
+            if ((Devices.Count - DriversFound) != 0)
+            {
+                label2.Text = "Для этих устройств НЕ найдены драйверы:";
+                label2.Visible = true;
+                RefreshDevicesList(1,2);
+                listBox2.Visible = true;
+            }
+            button2.Enabled = true;
+            ConsoleBox.Text += "\nПрограмма готова к установке драйверов. ;)\n";
+            button1.Text = "Установить драйверы";
+            button1.Enabled = true;
+            DriversChecked = true;
         }
 
         void InstallDrivers() {
@@ -236,6 +237,7 @@ namespace RDInst
                     //распакуем архив
                     z.StartInfo.FileName = @"Utils\7z.exe";
                     z.StartInfo.Arguments = @"x -y Drivers\" + arch + ".7z";
+                    z.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     z.Start();
                     z.WaitForExit();
                     //
@@ -248,7 +250,7 @@ namespace RDInst
                         /* устанавливаем драйвер
                          * TODO: процедура долгая, нужно запускать ее в отдельном потоке
                          */
-                        result = DriverPackagePreinstall(DrvPath, 0);
+                        result = DriverPackageInstall(DrvPath, 0);
 
                         Directory.Delete(arch, true); //удаляем распакованную папку
                     }
@@ -387,6 +389,34 @@ namespace RDInst
         {
             ConsoleBox.SelectionStart = ConsoleBox.Text.Length;
             ConsoleBox.ScrollToCaret();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBox1.Enabled = false;
+            if (comboBox1.SelectedIndex != -1) {
+                try { richTextBox1.LoadFile(@"base" + comboBox1.Items[comboBox1.SelectedIndex] + ".ini", RichTextBoxStreamType.PlainText); }
+                catch (Exception ex) {
+                    Program.PrtLog(DateTime.Now + " Error read base file: " + ex.ToString(), true);
+                    ConsoleBox.Text += "Ошибка открытия файла " + comboBox1.Items[comboBox1.SelectedIndex] + ".\nСм. лог для подробностей.\n";
+                    return; 
+                }
+                ConsoleBox.Text += "Открыт файл базы " + comboBox1.Items[comboBox1.SelectedIndex] + ".\n";
+                richTextBox1.Enabled = true;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.Text == "" || richTextBox1.Enabled == false) return;
+            try { richTextBox1.SaveFile(@"base" + comboBox1.Items[comboBox1.SelectedIndex] + ".ini", RichTextBoxStreamType.PlainText); }
+            catch (Exception ex) {
+                Program.PrtLog(DateTime.Now + " Error write base file: " + ex.ToString(), true);
+                ConsoleBox.Text += "Ошибка сохранения файла " + comboBox1.Items[comboBox1.SelectedIndex] + ".\nСм. лог для подробностей.\n";
+                return;
+            }
+            ConsoleBox.Text += "Сохранен файл базы " + comboBox1.Items[comboBox1.SelectedIndex] + ".\n";
+            richTextBox1.Enabled = false;
         }
     }
 }
