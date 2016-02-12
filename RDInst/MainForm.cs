@@ -59,18 +59,28 @@ namespace RDInst
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status = 'Error' OR Service = 'vga'"); //11 - not installed, 12 - error
                 foreach (ManagementObject obj in searcher.Get())
                 {
+                    if (obj == null) return;
+                    Program.PrtLog(DateTime.Now + " Obj != null", true);
                     string name = obj.GetPropertyValue("Name").ToString();
-                    string service = obj.GetPropertyValue("Service").ToString();
+                    Program.PrtLog(DateTime.Now + " Name get", true);
+
+                    string service;
+                    try { service = obj.GetPropertyValue("Service").ToString(); }
+                    catch { service = "none"; }
+                    
+                    Program.PrtLog(DateTime.Now + " Service get", true);
                     if (name != null && name != "" && name != "ttnfd")
                     {
                         //не добавляем видеокарту в список устройств, если на ней нестандартный драйвер
                         if (service == "vga" && name != "Стандартный VGA графический адаптер" && name != "Standart VGA Graphics Adapter")
                             return;
 
+                        Program.PrtLog(DateTime.Now + " Create installator", true);
                         Installator tempInst = new Installator();
                         tempInst.DevName = name;
                         tempInst.DevID = obj.GetPropertyValue("DeviceID").ToString().Substring(0, 21);
                         tempInst.DevDrv = "none";
+                        Program.PrtLog(DateTime.Now + " Add installator to devices", true);
                         Devices.Add(tempInst);
                     }
                 }
@@ -226,18 +236,26 @@ namespace RDInst
                     //распакуем архив
                     z.StartInfo.FileName = @"Utils\7z.exe";
                     z.StartInfo.Arguments = @"x -y Drivers\" + arch + ".7z";
-                    z.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     z.Start();
                     z.WaitForExit();
                     //
-                    string DrvPath = Application.StartupPath + @"\" + i.DevDrv; //получаем полный путь до inf-файла
 
-                    /* устанавливаем драйвер
-                     * TODO: процедура долгая, нужно запускать ее в отдельном потоке
-                     */
-                    int result = DriverPackagePreinstall(DrvPath, 0);
-                    
-                    Directory.Delete(arch, true); //удаляем распакованную папку
+                    int result = -1;
+                    if (Directory.Exists(arch))
+                    {
+                        string DrvPath = Application.StartupPath + @"\" + i.DevDrv; //получаем полный путь до inf-файла
+
+                        /* устанавливаем драйвер
+                         * TODO: процедура долгая, нужно запускать ее в отдельном потоке
+                         */
+                        result = DriverPackagePreinstall(DrvPath, 0);
+
+                        Directory.Delete(arch, true); //удаляем распакованную папку
+                    }
+                    else {
+                        result = 10;
+                        Program.PrtLog(DateTime.Now + " 7z unpack: directory not found", true);
+                    }
 
                     if (result != 0) {
                         Program.PrtLog(DateTime.Now + " Error install " + i.DevID + ": " + result, true);
